@@ -204,7 +204,13 @@ public class LinearFitter implements Fitter {
 
     @Override
     public double[] getUncertainty() {
-        return new double[0];
+        double[] residuals = new double[A.length];
+        double error = calculateErrors();
+        System.out.println(error);
+        for(int i = 0; i<A.length; i++){
+            residuals[i] = Math.sqrt(error)*DERIVATIVES[i][i];
+        }
+        return residuals;
     }
 
 }

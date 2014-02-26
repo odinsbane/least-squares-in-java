@@ -25,8 +25,8 @@ public class LinearFitterTest {
         fit.setData(x, z);
         fit.setParameters(new double[]{1,1,1});
         fit.fitData();
-
         double[] output = fit.getParameters();
+
         Assert.assertEquals(1.0, output[0], 1.0e-15);
         Assert.assertEquals(-2.0, output[1], 1.0e-14);
         Assert.assertEquals(1.0, output[2], 1.0e-14);

@@ -17,12 +17,12 @@ public class NonLinearSolver implements Fitter {
     Function FUNCTION;
     double[] ERROR;
     double[][] DERIVATIVES;
-    
-    double[][] HESSIAN;
-    
+
     double DELTA = 0.000001;   //used for calculating derivatives 
-    double MINERROR = 1e-9; //for evaluating 
-    double MINCHANGE = 1e-3;    //minimumchanges
+    double MIN_ERROR = 1e-6; //for evaluating
+    double MIN_CHANGE = 1e-6;    //minimumchanges
+    double STEP = 0.1;
+    double MAX_ITERATIONS = 10000;
     public NonLinearSolver(Function funct){
         
         FUNCTION=funct;
@@ -108,14 +108,14 @@ public class NonLinearSolver implements Fitter {
         
         Matrix coeff = new Matrix(matrix);
         Matrix sols = new Matrix(right,A.length);
-        
+        /*
         for(int i = 0; i<matrix.length; i++){
             for(int j=0; j<matrix[0].length; j++){
                 System.out.print(matrix[i][j] + "\t");
             }
             System.out.println("|\t" + right[i]);
         }
-        
+        */
         LUDecomposition adecom = coeff.lu();
 
         Matrix out = adecom.solve(sols);
@@ -125,7 +125,7 @@ public class NonLinearSolver implements Fitter {
         double max_change = Math.abs(values[0][0]);
         for(int i = 0; i<A.length; i++){
             max_change = max_change>Math.abs(values[i][0])?max_change:Math.abs(values[i][0]);
-            A[i] += values[i][0]*0.01;
+            A[i] += values[i][0]*STEP;
         }
 
         return max_change;
@@ -159,23 +159,31 @@ public class NonLinearSolver implements Fitter {
         initializeWorkspace();
         int i;
         double changes = 0;
-        for(i = 0; i<10000; i++){
+        double last_error = Double.MAX_VALUE;
+        for(i = 0; i<MAX_ITERATIONS; i++){
 
             double e = calculateErrors();
-            if(e<MINERROR)
+            if(e< MIN_ERROR){
                 break;
+            }
+            if(e>last_error){
+                System.err.println("Error increased: consider smaller step size.");
+                break;
+            }
+            last_error = e;
             calculateDerivatives();
             try{
                 changes = iterateValues();
-                if(changes<MINCHANGE)
+                if(changes< MIN_CHANGE)
                     break;
             } catch(Exception exc){
                 break;
             }
-            System.out.println("changes: " + changes);
         }
-        System.out.println("After " + i + " iterations");
-        
+        if(i==MAX_ITERATIONS){
+            System.err.println("Warning: Maximum iteration reached.");
+        }
+
         
     }
     /**
@@ -188,6 +196,23 @@ public class NonLinearSolver implements Fitter {
     @Override
     public double[] getUncertainty() {
         return new double[0];
+    }
+
+    public void setStepSize(double step){
+        STEP = step;
+    }
+
+    public void setMinError(double error){
+        MIN_ERROR = error;
+    }
+
+    /**
+     * When the parameters change less than this the program will stop iterating
+     *
+     * @param change
+     */
+    public void setMinChange(double change){
+        MIN_CHANGE = change;
     }
 
 }

@@ -296,4 +296,5 @@ public class MarquardtFitter implements Fitter {
         }
         return message;
     }
+
 }
