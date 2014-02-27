@@ -204,11 +204,27 @@ public class LinearFitter implements Fitter {
 
     @Override
     public double[] getUncertainty() {
+        printMatrix();
+        double sum_a = 0;
+        double sum_b = 0;
+        for(int i = 0;i<DERIVATIVES.length;i++){
+            sum_a += Math.pow(DERIVATIVES[i][0],2);
+            sum_b += Math.pow(DERIVATIVES[i][1],2);
+        }
+        Matrix a_matrix = new Matrix(ALPHA);
+        Matrix b = a_matrix.inverse();
+
+        for(int i = 0; i<b.getColumnDimension(); i++){
+            for(int j = 0; j<b.getRowDimension(); j++){
+                System.out.print(b.get(i,j) + "\t");
+            }
+            System.out.println();
+        }
+        System.out.println(sum_a/sum_b);
         double[] residuals = new double[A.length];
         double error = calculateErrors();
-        System.out.println(error);
         for(int i = 0; i<A.length; i++){
-            residuals[i] = Math.sqrt(error)*DERIVATIVES[i][i];
+            residuals[i] = error*Math.sqrt(b.get(i,i))/2;
         }
         return residuals;
     }
