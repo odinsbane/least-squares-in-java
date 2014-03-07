@@ -203,7 +203,8 @@ public class LinearFitter implements Fitter {
 
     /**
      * Get an uncertainty value, similar to the way gnuplot does it.
-     * @return
+     * Essentially the diagonals of the covariance matrix.
+     * @return array of length of the parameters.
      */
     @Override
     public double[] getUncertainty() {
@@ -212,19 +213,29 @@ public class LinearFitter implements Fitter {
         Matrix b = a_matrix.inverse();
 
         double[] residuals = new double[A.length];
-        double error = calculateErrors()/2.0;
-
-        for(int i = 0; i<3; i++){
-            for(int j = 0; j<3; j++){
-                System.out.print(Math.abs(b.get(i,j)*error) + "\t");
-            }
-            System.out.println();
-        }
+        double error = calculateErrors()/Z.length;
 
         for(int i = 0; i<A.length; i++){
-            residuals[i] = error*Math.sqrt(Math.abs(b.get(i,i)));
+            residuals[i] = Math.sqrt(b.get(i,i)*error);
         }
         return residuals;
     }
 
+    /**
+     *
+     */
+    public double[][] getCovarianceMatrix(){
+        Matrix a_matrix = new Matrix(ALPHA);
+        Matrix b = a_matrix.inverse();
+
+        double error = calculateErrors()/Z.length;
+        double[][] ret = new double[A.length][A.length];
+
+        for(int i = 0; i<A.length; i++){
+            for(int j = 0; j<A.length; j++){
+                ret[i][j] = b.get(i,j)*error;
+            }
+        }
+        return ret;
+    }
 }
