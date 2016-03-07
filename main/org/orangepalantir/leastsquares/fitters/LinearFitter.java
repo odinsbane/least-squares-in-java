@@ -184,11 +184,10 @@ public class LinearFitter implements Fitter {
 
         try{
           iterateValues();
-
         } catch(Exception exc){
             printMatrix();
             exc.printStackTrace();
-
+            throw exc;
          }
 
     }

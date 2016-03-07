@@ -177,7 +177,7 @@ public class NonLinearSolver implements Fitter {
                 if(changes< MIN_CHANGE)
                     break;
             } catch(Exception exc){
-                break;
+                throw exc;
             }
         }
         if(i==MAX_ITERATIONS){
@@ -207,7 +207,7 @@ public class NonLinearSolver implements Fitter {
     }
 
     /**
-     * When the parameters change less than this the program will stop iterating
+     * When the parameters change less than the change parameter the program will stop iterating
      *
      * @param change
      */
