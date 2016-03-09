@@ -187,7 +187,7 @@ public class LinearFitter implements Fitter {
         } catch(Exception exc){
             printMatrix();
             exc.printStackTrace();
-            throw exc;
+            throw new RuntimeException(exc);
          }
 
     }
