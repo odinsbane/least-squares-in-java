@@ -177,7 +177,7 @@ public class NonLinearSolver implements Fitter {
                 if(changes< MIN_CHANGE)
                     break;
             } catch(Exception exc){
-                throw exc;
+                throw new RuntimeException(exc);
             }
         }
         if(i==MAX_ITERATIONS){

@@ -225,7 +225,7 @@ public class MarquardtFitter implements Fitter {
                 System.out.println("Broke after " + i + " iterations");
                 printMatrix();
                 //printMatrix();
-                throw exc;
+                throw new RuntimeException(exc);
             }
 
             nerror = calculateErrors();
