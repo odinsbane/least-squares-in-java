@@ -5,11 +5,19 @@
 
 	<groupId>org.orangepalantir</groupId>
 	<artifactId>leastsquares</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Least squares in java.</name>
 	<url>https://github.com/odinsbane/least-squares-in-java</url>
+
+	<licenses>
+		<license>
+			<name>The MIT License (MIT)</name>
+			<url>https://opensource.org/licenses/MIT</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<dependencies>
 		<dependency>
