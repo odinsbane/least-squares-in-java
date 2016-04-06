@@ -5,12 +5,13 @@
 
 	<groupId>org.orangepalantir</groupId>
 	<artifactId>leastsquares</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Least squares in java.</name>
 	<url>https://github.com/odinsbane/least-squares-in-java</url>
-
+    <description>A small library for using least squres fitting in java. Build using the JAMA
+	matrix library</description>
 	<licenses>
 		<license>
 			<name>The MIT License (MIT)</name>
@@ -18,7 +19,31 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-
+    <developers>
+        <developer>
+            <id>odinsbane</id>
+            <name>Matthew Smith</name>
+            <email>melkor@orangepalantir.org</email>
+            <url>https://orangepalantir.org</url>
+            <organization>UCL LMCB</organization>
+            <organizationUrl>http://ucl.ac.uk/lmcb</organizationUrl>
+            <roles>
+                <role>lead</role>
+                <role>developer</role>
+                <role>debugger</role>
+                <role>reviewer</role>
+                <role>support</role>
+                <role>maintainer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/odinsbane/least-squares-in-java</connection>
+        <developerConnection>scm:git:git@github.com/odinsbane/least-squares-in-java</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/odinsbane/least-squares-in-java</url>
+    </scm>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
